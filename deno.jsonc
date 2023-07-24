@@ -1,0 +1,9 @@
+{
+    "tasks": {
+        "dev": "cd svelte-in-node; npm install; npm run dev",
+        "build": "deno task build-node && deno task build-embeds",
+        "build-node": "cd svelte-in-node; npm run build",
+        "build-embeds": "deno run -A embedder.ts build",
+        "serve": "deno task build && deno run --allow-net main.ts"
+    }
+}

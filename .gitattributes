@@ -1,0 +1,3 @@
+deno.lock: linguist-generated=true
+/src/embedded/: linguist-generated=true
+/svelte-in-node/build/: linguist-generated=true

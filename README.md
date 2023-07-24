@@ -1,0 +1,1 @@
+Experimenting in making a SvelteKit app that can be used with `deno` run, compile, install, etc.
