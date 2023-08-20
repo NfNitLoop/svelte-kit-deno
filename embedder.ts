@@ -8,7 +8,7 @@ export const options = {
     mappings: [
         {
             sourceDir: "svelte-in-node/build/client",
-            destDir: "src/embeded/client"
+            destDir: "src/embedded/client"
         },
 
     ]
