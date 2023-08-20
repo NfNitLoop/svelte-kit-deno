@@ -18,6 +18,7 @@ import svelteClient from "./embeded/client/dir.ts"
 export async function server() {
     const app = new oak.Application()
     app.use(logger)
+    app.use(immutables)
 
     const router = new oak.Router()
     serveDir(router, "/", svelteClient)
@@ -39,10 +40,9 @@ export async function server() {
 }
 
 
-async function serverSide() {
+async function serverSide(): Promise<oak.Middleware> {
     const server = new SvelteServer(manifest);
     await server.init({env: {}})
-
 
     const handler: oak.Middleware = async (ctx) => {
         const { originalRequest } = ctx.request
@@ -76,7 +76,19 @@ async function logger(ctx: oak.Context, next: () => Promise<unknown>) {
     } finally {
         const req = ctx.request
         const res = ctx.response
-        console.log(`${res.status}: ${req.url.pathname}`)
+        req.ip
+        console.log(`[${req.ip}] ${res.status}: ${req.url.pathname}`)
     }
+}
 
+/** 
+ * SvelteKit generates an /immutable/ directory for chunks that will never change their content.
+ * This serves them w/ the proper headers for immutability.
+ */
+async function immutables(ctx: oak.Context, next: () => Promise<unknown>) {
+    const { request, response } = ctx
+    await next()
+    if (request.url.pathname.includes("/immutable/")) {
+        response.headers.set("Cache-Control", "public, max-age=31536000, immutable")
+    }
 }
