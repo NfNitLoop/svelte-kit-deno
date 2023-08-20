@@ -12,7 +12,7 @@
 import { Server as SvelteServer } from "../svelte-in-node/build/server/index.js";
 import { manifest } from "../svelte-in-node/build/server/manifest.js"
 import { oak, serveDir } from "./deps/embedder.ts"
-import svelteClient from "./embeded/client/dir.ts"
+import svelteClient from "./embedded/client/dir.ts"
 
 
 export async function server() {
